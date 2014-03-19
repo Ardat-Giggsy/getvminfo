@@ -20,7 +20,7 @@ static ssize_t getvminfo_call(struct file *file, const char __user *buf,
   int rc;
   char callbuf[MAX_CALL];
   char resp_line[MAX_LINE];
-
+  int flag;
   /* the user's write() call should not include a count that exceeds
    * the size of the module's buffer for the call string.
    */
@@ -65,6 +65,13 @@ static ssize_t getvminfo_call(struct file *file, const char __user *buf,
       return count;  /* write() calls return the number of bytes written */
   }
 
+ /*
+  *Here we record the information we need to the respbuf and modify the
+  *set of pointers in vm_area_struct
+  */
+
+  //So this is the root/head of the list of VMAs allocated!
+  call_task -> mm -> mmap;
   sprintf(respbuf, "Success:\n");
 
   /* Here the response has been generated and is ready for the user
