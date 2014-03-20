@@ -20,6 +20,7 @@ static ssize_t getvminfo_call(struct file *file, const char __user *buf,
   int rc;
   char callbuf[MAX_CALL];
   char resp_line[MAX_LINE];
+  struct vm_area_struct * it;
   int flag;
   /* the user's write() call should not include a count that exceeds
    * the size of the module's buffer for the call string.
@@ -70,9 +71,16 @@ static ssize_t getvminfo_call(struct file *file, const char __user *buf,
   *set of pointers in vm_area_struct
   */
 
-  //So this is the root/head of the list of VMAs allocated!
-  call_task -> mm -> mmap;
-  sprintf(respbuf, "Success:\n");
+  //So this is the root/head of the list of VMAs allocate!
+  it = kmalloc(sizeof(struct vm_area_struct), GFP_KERNEL);
+  it = call_task -> mm -> mmap;
+  sprintf(respbuf, "Here is the flags of VMAs:\n");
+  while(it!=NULL)
+  {
+    sprintf(resp_line, "start:%ld end:%ld flag:%lu\n", it -> vm_start , it -> vm_end, it -> vm_flags);
+    strcat(respbuf, resp_line);
+    it = it -> vm_next; 
+  }
 
   /* Here the response has been generated and is ready for the user
    * program to access it by a read() call.
