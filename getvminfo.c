@@ -35,7 +35,6 @@ int log_fault1(struct vm_area_struct *vma, struct vm_fault *vmf)
   result = my_fault1(vma, vmf);
   end = ktime_get();
   actual_time = ktime_to_ns(ktime_sub(end, start));
-  
   printk("1 %lu %lu %lu %lu %lld\n", (unsigned long) vma -> vm_mm, (unsigned long) vmf -> virtual_address, vmf -> pgoff, page_to_pfn(vmf -> page), (long long)actual_time);
   return result;
 }
