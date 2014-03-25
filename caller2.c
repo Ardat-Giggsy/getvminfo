@@ -31,7 +31,7 @@ void main (int argc, char* argv[])
   char *addr;
   int fd, length;
   struct stat sb;
-  char *fullname;  
+  char *fullname; 
   char c;
   int gen;
   
@@ -41,7 +41,7 @@ void main (int argc, char* argv[])
   }
 
   fullname = (char *)malloc(sizeof(char));
-  strcpy(fullname,"getvminfo ");
+  strcpy(fullname, "getvminfo ");
   strcat(fullname, argv[2]);
   
   /* Open the file */
@@ -85,9 +85,9 @@ void main (int argc, char* argv[])
   
   fprintf(stdout, "The start address of the mapping is: %lu\n", (unsigned long) addr);
   
-  //Sequential read
   
-  for(i = 0; i < sb.st_size; i++)
+  //Stride of size 10000 read
+  for(i = 0; i < sb.st_size; i = i + 10000000)
   {
     c = addr[i];
   }
